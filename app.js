@@ -20,6 +20,14 @@ app.get('/users/:id', (req, res) => {
   });
 });
 
+// 2b. GET /users/config (defined AFTER /users/:id to test route absorption)
+app.get('/users/config', (req, res) => {
+  res.json({
+    route: '/users/config',
+    description: 'Users Config'
+  });
+});
+
 // 3. GET /users/:id/contents
 app.get('/users/:id/contents', (req, res) => {
   res.json({
