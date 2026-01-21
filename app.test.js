@@ -25,6 +25,16 @@ describe('Express v5 Routing Experiment', () => {
       expect(response.body.userId).toBe('123');
     });
 
+    it('should return user details for string ID "xxxx"', async () => {
+      const response = await request(app)
+        .get('/users/xxxx')
+        .expect(200);
+
+      expect(response.body.route).toBe('/users/:id');
+      expect(response.body.description).toBe('User details');
+      expect(response.body.userId).toBe('xxxx');
+    });
+
     it('should return user details for ID "contents" (edge case)', async () => {
       const response = await request(app)
         .get('/users/contents')
@@ -34,6 +44,32 @@ describe('Express v5 Routing Experiment', () => {
       expect(response.body.route).toBe('/users/:id');
       expect(response.body.description).toBe('User details');
       expect(response.body.userId).toBe('contents');
+    });
+  });
+
+  describe('GET /users/config (defined AFTER /users/:id)', () => {
+    it('should be absorbed by /users/:id route (config is treated as id)', async () => {
+      const response = await request(app)
+        .get('/users/config')
+        .expect(200);
+
+      // Key test: Since /users/config is defined AFTER /users/:id,
+      // it should be absorbed by the dynamic route /users/:id
+      // and "config" should be treated as the id parameter
+      expect(response.body.route).toBe('/users/:id');
+      expect(response.body.description).toBe('User details');
+      expect(response.body.userId).toBe('config');
+    });
+
+    it('should verify /users/config is NOT routed to its own handler', async () => {
+      const response = await request(app)
+        .get('/users/config')
+        .expect(200);
+
+      // This confirms that the /users/config route handler is NOT called
+      // because it's absorbed by /users/:id
+      expect(response.body.route).not.toBe('/users/config');
+      expect(response.body.description).not.toBe('Users Config');
     });
   });
 
