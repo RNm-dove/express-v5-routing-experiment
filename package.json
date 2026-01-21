@@ -1,0 +1,20 @@
+{
+  "name": "express-v5-routing-experiment",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest"
+  },
+  "keywords": ["express", "routing", "experiment"],
+  "author": "",
+  "license": "ISC",
+  "description": "Experiment to verify Express v5 routing priority behavior",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "supertest": "^7.2.2"
+  }
+}
