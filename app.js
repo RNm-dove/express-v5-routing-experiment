@@ -30,7 +30,7 @@ app.get('/users/:id/contents', (req, res) => {
   });
 });
 
-// 4. GET /users/:id/contents/:id
+// 4. GET /users/:id/contents/:contentId
 app.get('/users/:id/contents/:contentId', (req, res) => {
   res.json({
     route: '/users/:id/contents/:contentId',
